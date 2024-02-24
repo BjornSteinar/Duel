@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode backward = KeyCode.S;
     public KeyCode right = KeyCode.D;
 
+    public KeyCode lClick = KeyCode.Mouse0;
+
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
@@ -109,6 +111,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+        if (Input.GetKey(lClick))
+        {
+            playerAnim.SetBool("attacking", true);
+            WaitForFunction();
+            playerAnim.SetBool("attacking", false);
+        }
     }
 
     private void MovePlayer()
@@ -152,5 +160,8 @@ public class PlayerMovement : MonoBehaviour
 
         readyToJump = true;
     }
-
+    IEnumerator WaitForFunction()
+    {
+        yield return new WaitForSeconds(2);
+    }
 }
