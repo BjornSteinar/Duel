@@ -1348,6 +1348,8 @@ GameObject:
   m_Component:
   - component: {fileID: 217313489}
   - component: {fileID: 217313488}
+  - component: {fileID: 217313490}
+  - component: {fileID: 217313491}
   m_Layer: 12
   m_Name: Enemy
   m_TagString: Enemy
@@ -1398,6 +1400,49 @@ Transform:
   - {fileID: 1946686857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 190, z: 0}
+--- !u!114 &217313490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217313487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ef322816b98394481f8107038c756d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHc: {fileID: 4540228998875685144}
+  enemyHc: {fileID: 1946686860}
+  blocking: 0
+  enemyAnim: {fileID: 1946686859}
+  enemyCollider: {fileID: 1946686858}
+  weaponType: 3
+  drawn: 0
+  weapon: {fileID: 511642811}
+--- !u!136 &217313491
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217313487}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.21573806
+  m_Height: 1.8981886
+  m_Direction: 1
+  m_Center: {x: -0.053425133, y: 0.14493847, z: -0.021339655}
 --- !u!1 &218337145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,13 +2634,13 @@ GameObject:
   - component: {fileID: 511642814}
   - component: {fileID: 511642813}
   - component: {fileID: 511642817}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Heavy_Sword
   m_TagString: EnemyWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &511642812
 Transform:
   m_ObjectHideFlags: 0
@@ -2655,7 +2700,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -2722,7 +2767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36de6f024fdc92c4ca2e2299e7ccbedc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hc: {fileID: 1946686860}
+  hc: {fileID: 4540228998875685144}
   playerAnim: {fileID: 4540228998875685143}
   enemyAnim: {fileID: 1946686859}
 --- !u!1 &513652417
@@ -5800,7 +5845,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1416892496}
   - component: {fileID: 1416892495}
-  - component: {fileID: 1416892497}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameManager
@@ -5836,20 +5880,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1416892497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416892494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89ef322816b98394481f8107038c756d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerHc: {fileID: 0}
-  enemyHc: {fileID: 0}
 --- !u!1 &1422377993
 GameObject:
   m_ObjectHideFlags: 0
@@ -7314,6 +7344,7 @@ GameObject:
   - component: {fileID: 1801942990}
   - component: {fileID: 1801942991}
   - component: {fileID: 1801942992}
+  - component: {fileID: 1801942993}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -7380,6 +7411,8 @@ MonoBehaviour:
   weaponType: 3
   drawn: 0
   canMove: 1
+  blocking: 0
+  playerCollider: {fileID: 1925138999642200467}
   weapon: {fileID: 1959911486344986521}
   moveSpeed: 5
   groundDrag: 5
@@ -7401,6 +7434,29 @@ MonoBehaviour:
   playerAnim: {fileID: 4540228998875685143}
   thirdPersonCam: {fileID: 734329886}
   combatCam: {fileID: 1520006203}
+--- !u!136 &1801942993
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801942989}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.21573806
+  m_Height: 1.9042292
+  m_Direction: 1
+  m_Center: {x: -0.053425133, y: 0.14191818, z: -0.021339655}
 --- !u!1 &1805783319
 GameObject:
   m_ObjectHideFlags: 3
@@ -7760,6 +7816,7 @@ GameObject:
   - component: {fileID: 1946686859}
   - component: {fileID: 1946686858}
   - component: {fileID: 1946686860}
+  - component: {fileID: 1946686861}
   m_Layer: 12
   m_Name: Enemy Model
   m_TagString: Enemy
@@ -7804,10 +7861,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3003232
-  m_Height: 1.9000001
+  m_Radius: 0.21573806
+  m_Height: 1.9289875
   m_Direction: 1
-  m_Center: {x: 0.018604279, y: 0.95062494, z: -0.027147472}
+  m_Center: {x: -0.053425133, y: 0.9604392, z: -0.021339655}
 --- !u!95 &1946686859
 Animator:
   serializedVersion: 5
@@ -7843,6 +7900,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   attack: 5
+--- !u!114 &1946686861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946686856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5630e694f56a2d448a9d2954b002496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 511642811}
+  pM: {fileID: 0}
 --- !u!1 &1967794822
 GameObject:
   m_ObjectHideFlags: 3
@@ -9867,7 +9938,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -9997,9 +10068,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36de6f024fdc92c4ca2e2299e7ccbedc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hc: {fileID: 4540228998875685144}
-  playerAnim: {fileID: 0}
-  enemyAnim: {fileID: 0}
+  hc: {fileID: 1946686860}
+  playerAnim: {fileID: 4540228998875685143}
+  enemyAnim: {fileID: 1946686859}
 --- !u!1 &2032241964717082337
 GameObject:
   m_ObjectHideFlags: 0

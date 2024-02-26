@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public int weaponType = 0;
     public bool drawn;
     public bool canMove = true;
+    public bool blocking;
+    public CapsuleCollider playerCollider;
 
     [Header("Character Weapon")]
     public GameObject weapon;
@@ -84,19 +86,36 @@ public class PlayerMovement : MonoBehaviour
         {
             drawWeapon();
         }
+
+        
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            blocking = true;
+            playerAnim.SetBool("Blocking", true);
+            playerCollider.enabled = false;
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            blocking = false;
+            playerAnim.SetBool("Blocking", false);
+            playerCollider.enabled = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             swingWeapon();
+            //playerAnim.ResetTrigger("swing");
         }
     }
     void swingWeapon()
     {
         // Heavy weapon
-        if (weaponType == 3 && drawn)
+        if (weaponType == 3 && drawn && !blocking)
         {
-            playerAnim.Play("Heavy weapon attack");
+            // playerAnim.Play("Heavy weapon attack");
+            playerAnim.SetTrigger("swing");
         }
-    }
+    }    
     void drawWeapon()
     {
         // Heavy weapon
@@ -110,7 +129,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!drawn)
             {
-                playerAnim.Play("Draw heavy weapon");
+                playerAnim.SetInteger("equip", 3);
+                playerAnim.SetTrigger("drawing");
                 weapon.SetActive(true);
                 drawn = true;
             }

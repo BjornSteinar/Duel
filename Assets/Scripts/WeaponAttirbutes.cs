@@ -8,17 +8,17 @@ public class WeaponAttirbutes : MonoBehaviour
     public Animator playerAnim;
     public Animator enemyAnim;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<HealthController>().TakeDamage(hc.attack);
-
+            enemyAnim.Play("Hit");
         }
         if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthController>().TakeDamage(hc.attack);
-            playerAnim.SetTrigger("hit");
+            playerAnim.Play("Hit");
         }
     }
 

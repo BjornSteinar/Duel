@@ -20,11 +20,11 @@ public class MovementDisabler : StateMachineBehaviour
 
         if(enableMovement == Option.Enable)
         {
-            weaponManager.EnableMovement(true);
+            weaponManager.EnableMovement(false);
         }
         else
         {
-            weaponManager.EnableMovement(false);
+            weaponManager.EnableMovement(true);
         }
     }
 
