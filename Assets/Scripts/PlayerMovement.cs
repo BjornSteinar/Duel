@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Misc")]
+    public int weaponType = 0;
+    public bool drawn;
+    public bool canMove = true;
+
+    [Header("Character Weapon")]
+    public GameObject weapon;
+
+    private GameManager manager;
+    
     [Header("Movement")]
     public float moveSpeed;
 
@@ -48,7 +58,13 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        manager = FindObjectOfType<GameManager>();
+        if (manager == null) print("No manager in scene");
+        drawn = true;
+        drawWeapon();
     }
+
+
     private void Update()
     {
         // ground check
@@ -63,8 +79,43 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             rb.drag = 0;
-    }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            drawWeapon();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            swingWeapon();
+        }
+    }
+    void swingWeapon()
+    {
+        // Heavy weapon
+        if (weaponType == 3 && drawn)
+        {
+            playerAnim.Play("Heavy weapon attack");
+        }
+    }
+    void drawWeapon()
+    {
+        // Heavy weapon
+        if (weaponType == 3)
+        {
+            if (drawn)
+            {
+                playerAnim.SetInteger("equip", 0);
+                weapon.SetActive(false);
+                drawn = false;
+            }
+            else if (!drawn)
+            {
+                playerAnim.Play("Draw heavy weapon");
+                weapon.SetActive(true);
+                drawn = true;
+            }
+        }
+    }
     private void FixedUpdate()
     {
         MovePlayer();
@@ -111,30 +162,28 @@ public class PlayerMovement : MonoBehaviour
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
-        if (Input.GetKey(lClick))
-        {
-            playerAnim.SetBool("attacking", true);
-            WaitForFunction();
-            playerAnim.SetBool("attacking", false);
-        }
     }
 
     private void MovePlayer()
     {
-        // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        if (canMove)
+        {
+            // calculate movement direction
+            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
 
-        // on ground
-        if (grounded) {
-            playerAnim.SetBool("Jump", false);
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
-        // in air
-        else if(!grounded)
-            playerAnim.SetBool("combat walking", false);
+            // on ground
+            if (grounded)
+            {
+                playerAnim.SetBool("Jump", false);
+                rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            }
+            // in air
+            else if (!grounded)
+                playerAnim.SetBool("combat walking", false);
             playerAnim.SetBool("walking", false);
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
     }
 
     private void SpeedControl()

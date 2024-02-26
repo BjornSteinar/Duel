@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
-    public float playerHealth = 100;
-    public float enemyHealth = 100;
-
-    // Start is called before the first frame update
-    void Start()
+    public int health;
+    public int attack;
+    public void TakeDamage(int amount)
     {
-        
+        health -= amount;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DealDamage(GameObject target)
     {
-        
+        var hc = target.GetComponent<HealthController>();
+        if(hc != null)
+        {
+            hc.TakeDamage(attack);
+        }
     }
 }

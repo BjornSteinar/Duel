@@ -5,7 +5,6 @@ using UnityEngine;
 public class ThirdPersonCam : MonoBehaviour
 {
     [Header("Keybinds")]
-    public KeyCode camSwitch = KeyCode.LeftShift;
 
     [Header("References")]
     public Transform orientation;
@@ -40,11 +39,6 @@ public class ThirdPersonCam : MonoBehaviour
 
     private void Update()
     {
-        // switch camera style
-        if (Input.GetKeyDown(camSwitch))
-        {
-            SwitchCameraStyle();
-        }
 
         // rotate orientation
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
@@ -68,14 +62,5 @@ public class ThirdPersonCam : MonoBehaviour
 
             player.forward = dirToCombatLookAt.normalized;
         }
-    }
-  
-    private void SwitchCameraStyle()
-    {
-        bool tPCcurrentState = thirdPersonCam.activeSelf;
-        thirdPersonCam.SetActive(!tPCcurrentState);
-
-        bool cCam = combatCam.activeSelf;
-        combatCam.SetActive(!cCam);
     }
 }
